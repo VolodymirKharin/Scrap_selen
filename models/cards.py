@@ -20,8 +20,5 @@ class Cards(Base):
 
 
 if __name__ == '__main__':
-    # create_db()
-    new_card = Cards(title='title', link='http', date='07-09-2022', city='Kiev', beds=2, description='Good',
-                     price=2120.00)
-    print(new_card)
+    create_db()
 
