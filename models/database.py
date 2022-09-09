@@ -17,7 +17,3 @@ def del_db():
     Base.metadata.drop_all(engine)
 
 
-if __name__ == '__main__':
-    create_db()
-
-
