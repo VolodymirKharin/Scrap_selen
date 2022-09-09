@@ -1,0 +1,5 @@
+HOST_DB = 'localhost'
+PORT_DB = '5432'
+USER = 'user'
+PASSWORD = 'pass'
+DB_NAME = 'appdb'
