@@ -1,7 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.common.action_chains import ActionChains
 from datetime import date, timedelta
 from models.crud import add_to_db
 import locale
@@ -20,16 +18,13 @@ def get_source_html(url):
         try:
             pagination = driver.find_element(by=By.CLASS_NAME,
                                              value="pagination").find_elements(by=By.TAG_NAME, value="a")
-            print(pagination[-2].text)
             if 'Next' not in pagination[-2].text:
-                print('test3')
                 get_card_from_page(driver)
                 break
             else:
                 get_card_from_page(driver)
                 next_page = driver.find_element(by=By.CLASS_NAME,
                                                 value="pagination").find_elements(by=By.TAG_NAME, value="a")
-                print(next_page[-2].text)
                 driver.get(pagination[-2].get_attribute('href'))
 
 
@@ -57,12 +52,9 @@ def get_card_from_page(driver):
 
         room_link = card.find_element(by=By.CLASS_NAME,
                                          value="title").find_element(by=By.TAG_NAME, value="a").get_attribute('href')
-        print(room_link)
         driver.implicitly_wait(10)
         driver.execute_script(f"window.open('{room_link}')")
         driver.switch_to.window(driver.window_handles[1])
-
-        # WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "priceWrapper-1165431705")))
 
         wait = WebDriverWait(driver, 10)
         wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'priceWrapper-1165431705')))
@@ -91,8 +83,6 @@ def get_card_from_page(driver):
             description = 'No description'
 
         print(number_card)
-        print(title, price, amount_bads, new_date_posted, url_img, city)
-        print(description)
         add_to_db(title=title, link=url_img, date=new_date_posted, city=city, beds=amount_bads, description=description, price=price)
         driver.close()
         driver.switch_to.window(driver.window_handles[0])
